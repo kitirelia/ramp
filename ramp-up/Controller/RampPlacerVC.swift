@@ -20,9 +20,13 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
     @IBOutlet weak var upBtn: UIButton!
     var selectedRamp:SCNNode?
     
+    var rampArray = [SCNNode]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
         // Set the view's delegate
         sceneView.delegate = self
@@ -57,8 +61,28 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
         
+        configuration.planeDetection = .horizontal
+        
         // Run the view's session
         sceneView.session.run(configuration)
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+
+            //let planAnchor = anchor as! ARPlaneAnchor
+            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
+            let planeNode = SCNNode()
+            planeNode.position = SCNVector3(x:planeAnchor.center.x,y:0,z:planeAnchor.center.z)
+            planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
+
+            let gridMaterial = SCNMaterial()
+            gridMaterial.diffuse.contents = UIImage(named:"art.scnassets/textures/grid.png")
+            plane.materials = [gridMaterial]
+            planeNode.geometry = plane
+            node.addChildNode(planeNode)
+
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -67,6 +91,8 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
         // Pause the view's session
         sceneView.session.pause()
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -99,16 +125,26 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
         
     }
     
+    //MARK : - ARSCNViewDelegateMethod
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard  let touch = touches.first else { return }
         
-        let results = sceneView.hitTest(touch.location(in: sceneView), types: [.featurePoint])
+        let touchLocation = touch.location(in: sceneView)
         
-        guard let hitFeature = results.last else { return }
+        let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
+       
+        if let hitResult = results.first{
+            addSingleRamp(atLocation: hitResult)
+        }
         
-        let hitTransform = SCNMatrix4(hitFeature.worldTransform)
-        let hitPositon = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
-        placeRamp(position: hitPositon)
+        // Dev Slopes
+//        let results = sceneView.hitTest(touch.location(in: sceneView), types: [.featurePoint])
+//
+//        guard let hitFeature = results.last else { return }
+//
+//        let hitTransform = SCNMatrix4(hitFeature.worldTransform)
+//        let hitPositon = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+//        placeRamp(position: hitPositon)
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -149,6 +185,7 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
             selectedRamp = nil
         }
     }
+   
     
     @objc func onLongPressed(gesture:UILongPressGestureRecognizer){
         if let ramp = selectedRamp{
@@ -167,6 +204,29 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
                 }
             }
         }
+    }
+    
+    
+    func addSingleRamp(atLocation location : ARHitTestResult){
+        let ramp = Ramp.getSmallPipe()
+        ramp.position = SCNVector3(
+            x:location.worldTransform.columns.3.x,
+            y:location.worldTransform.columns.3.y,
+            z:location.worldTransform.columns.3.z
+        )
+        rampArray.append(ramp)
+        sceneView.scene.rootNode.addChildNode(ramp)
+        
+    }
+    
+    @IBAction func clearBtnPressed(_ sender: Any) {
+        
+        if !rampArray.isEmpty{
+            for ramp in rampArray{
+                ramp.removeFromParentNode()
+            }
+        }
+        
     }
     
 }

@@ -15,6 +15,7 @@
 		644327EC1F55056E00D30A7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 644327EA1F55056E00D30A7B /* LaunchScreen.storyboard */; };
 		644327F51F5510FB00D30A7B /* RampPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644327F41F5510FB00D30A7B /* RampPickerVC.swift */; };
 		644327FA1F552B8300D30A7B /* Ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644327F91F552B8300D30A7B /* Ramp.swift */; };
+		644327FE1F559AE900D30A7B /* RulerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644327FD1F559AE900D30A7B /* RulerVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		644327ED1F55056E00D30A7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		644327F41F5510FB00D30A7B /* RampPickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RampPickerVC.swift; sourceTree = "<group>"; };
 		644327F91F552B8300D30A7B /* Ramp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ramp.swift; sourceTree = "<group>"; };
+		644327FD1F559AE900D30A7B /* RulerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				644327E31F55056E00D30A7B /* RampPlacerVC.swift */,
+				644327FD1F559AE900D30A7B /* RulerVC.swift */,
 				644327F41F5510FB00D30A7B /* RampPickerVC.swift */,
 			);
 			path = Controller;
@@ -163,6 +166,7 @@
 			files = (
 				644327E41F55056E00D30A7B /* RampPlacerVC.swift in Sources */,
 				644327FA1F552B8300D30A7B /* Ramp.swift in Sources */,
+				644327FE1F559AE900D30A7B /* RulerVC.swift in Sources */,
 				644327F51F5510FB00D30A7B /* RampPickerVC.swift in Sources */,
 				644327E01F55056E00D30A7B /* AppDelegate.swift in Sources */,
 			);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5Cs-km-ugY">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,47 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--RulerVC-->
+        <scene sceneID="2aT-fI-nq6">
+            <objects>
+                <viewController id="5Cs-km-ugY" customClass="RulerVC" customModule="ramp_up" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kjL-jd-vCG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KGs-X7-iqm">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iMU-EP-30b">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    </arscnView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="iMU-EP-30b" firstAttribute="leading" secondItem="KGs-X7-iqm" secondAttribute="leading" id="ITx-lC-k0q"/>
+                                    <constraint firstAttribute="trailing" secondItem="iMU-EP-30b" secondAttribute="trailing" id="MTo-nz-dIm"/>
+                                    <constraint firstAttribute="bottom" secondItem="iMU-EP-30b" secondAttribute="bottom" id="NUP-aU-2Dx"/>
+                                    <constraint firstItem="iMU-EP-30b" firstAttribute="top" secondItem="KGs-X7-iqm" secondAttribute="top" id="yjl-ee-aOC"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KGs-X7-iqm" firstAttribute="bottom" secondItem="oPF-ie-6ZW" secondAttribute="bottom" id="7fU-nE-WL4"/>
+                            <constraint firstItem="KGs-X7-iqm" firstAttribute="leading" secondItem="oPF-ie-6ZW" secondAttribute="leading" id="LQU-7r-OuE"/>
+                            <constraint firstItem="KGs-X7-iqm" firstAttribute="trailing" secondItem="oPF-ie-6ZW" secondAttribute="trailing" id="Wbu-EM-abM"/>
+                            <constraint firstItem="KGs-X7-iqm" firstAttribute="top" secondItem="kjL-jd-vCG" secondAttribute="top" id="rrZ-E0-IC8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oPF-ie-6ZW"/>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="iMU-EP-30b" id="a1k-NP-QHu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ptr-Fa-Q16" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-828" y="146.17691154422789"/>
+        </scene>
         <!--Ramp PlacerVC-->
         <scene sceneID="tXr-a1-R10">
             <objects>
@@ -71,12 +112,25 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8J-Y9-WDM">
+                                <rect key="frame" x="10" y="16" width="75" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="4Wr-XD-YVe"/>
+                                    <constraint firstAttribute="width" constant="75" id="YbZ-4a-Xwh"/>
+                                </constraints>
+                                <state key="normal" title="Clear" image="rotateButton"/>
+                                <connections>
+                                    <action selector="clearBtnPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Cb7-4a-Xya"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Znx-5c-Ahc" firstAttribute="bottom" secondItem="DbY-nm-Sl9" secondAttribute="bottom" constant="10" id="1eo-jG-Gcw"/>
                             <constraint firstItem="YvD-4l-1JN" firstAttribute="top" secondItem="LH0-wj-vAA" secondAttribute="top" id="2Cm-VS-nrn"/>
+                            <constraint firstItem="c8J-Y9-WDM" firstAttribute="leading" secondItem="LH0-wj-vAA" secondAttribute="leading" constant="10" id="4oz-C1-R2r"/>
                             <constraint firstItem="YvD-4l-1JN" firstAttribute="leading" secondItem="Znx-5c-Ahc" secondAttribute="leading" id="4zO-b2-FW3"/>
+                            <constraint firstItem="c8J-Y9-WDM" firstAttribute="top" secondItem="LH0-wj-vAA" secondAttribute="top" constant="16" id="8j4-3o-B4G"/>
                             <constraint firstItem="DbY-nm-Sl9" firstAttribute="leading" secondItem="Znx-5c-Ahc" secondAttribute="leading" constant="10" id="UaG-MN-Lll"/>
                             <constraint firstItem="Znx-5c-Ahc" firstAttribute="trailing" secondItem="XQR-ML-FaL" secondAttribute="trailing" constant="10" id="buq-FI-6XU"/>
                             <constraint firstItem="YvD-4l-1JN" firstAttribute="bottom" secondItem="Znx-5c-Ahc" secondAttribute="bottom" id="g6V-H4-waq"/>
