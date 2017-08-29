@@ -13,6 +13,7 @@ class RampPickerVC: UIViewController {
 
     var sceneView:SCNView!
     var size:CGSize!
+    weak var rampPlacerVC:RampPlacerVC!
     
     init(size:CGSize){
         super.init(nibName:nil,bundle:nil)
@@ -38,28 +39,43 @@ class RampPickerVC: UIViewController {
         camera.usesOrthographicProjection = true
         scene.rootNode.camera = camera
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handlerTap(_:)))
+        sceneView.addGestureRecognizer(tap)
+        
+        let rotate = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: CGFloat(0.01 * Double.pi), z: 0, duration: 0.1))
+        
         var obj = SCNScene(named:"art.scnassets/pipe.dae")
         var node = obj?.rootNode.childNode(withName:"pipe",recursively:true)!
+        node?.runAction(rotate!)
         node?.scale = SCNVector3Make(0.0022, 0.0022, 0.0022)
         node?.position = SCNVector3Make(-1, 0.7, -1)
         scene.rootNode.addChildNode(node!)
         
         obj = SCNScene(named: "art.scnassets/pyramid.dae")
         node = obj?.rootNode.childNode(withName: "pyramid", recursively: true)!
+        node?.runAction(rotate!)
         node?.scale = SCNVector3Make(0.0058, 0.0058, 0.0058)
         node?.position = SCNVector3Make(-1, -0.45, -1)
         scene.rootNode.addChildNode(node!)
         
         obj = SCNScene(named: "art.scnassets/quarter.dae")
         node = obj?.rootNode.childNode(withName: "quarter", recursively: true)!
+        node?.runAction(rotate!)
         node?.scale = SCNVector3Make(0.0058, 0.0058, 0.0058)
         node?.position = SCNVector3Make(-1, -2.2, -1)
         scene.rootNode.addChildNode(node!)
-        
-        
     }
     
+    @objc func handlerTap(_ gesture:UIGestureRecognizer){
+        let p = gesture.location(in: sceneView)
+        let hitResult = sceneView.hitTest(p, options: [:])
+        
+        if hitResult.count>0{
+            let node = hitResult[0].node
+            print("name : \(node.name)")
+            rampPlacerVC.onRampSelected(rampName: node.name!)
+        }
+    }
     
-
     
 }
