@@ -14,6 +14,7 @@ class RulerVC: UIViewController,ARSCNViewDelegate {
 
     @IBOutlet weak var sceneView: ARSCNView!
     var dotNodes = [SCNNode]()
+    var textNode = SCNNode()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,14 +47,20 @@ class RulerVC: UIViewController,ARSCNViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard  let touch = touches.first else { return }
         
+        if dotNodes.count >= 2{
+            for dot in dotNodes{
+                dot.removeFromParentNode()
+            }
+            dotNodes = [SCNNode]()
+        }
+        
         let touchLocation = touch.location(in: sceneView)
         
         let results = sceneView.hitTest(touchLocation, types: .featurePoint)
         
         if let hitResult = results.first{
-            if dotNodes.count<2 {
-                addDot(at: hitResult)
-            }
+           
+            addDot(at: hitResult)
         }
     }
     
@@ -87,7 +94,25 @@ class RulerVC: UIViewController,ARSCNViewDelegate {
         let distance = sqrt(pow(a, 2) + pow(b, 2) + pow(c, 2))
         
       
-        print("distance ",abs(distance))
+        //print("distance ",abs(distance))
+        updateText(text: "\(abs(distance))",atPosition: end.position)
+    }
+    
+    func updateText(text:String, atPosition position:SCNVector3){
+        
+        textNode.removeFromParentNode()
+        
+        let textGeometry = SCNText(string: text, extrusionDepth: 1.0)
+        textGeometry.firstMaterial?.diffuse.contents = UIColor.green
+        
+        textNode = SCNNode(geometry: textGeometry)
+        
+        textNode.position = SCNVector3(position.x, position.y + 0.01, position.z)
+        
+        textNode.scale = SCNVector3(0.01, 0.01, 0.01)
+        
+        sceneView.scene.rootNode.addChildNode(textNode)
+        
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
