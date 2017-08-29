@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		644327E01F55056E00D30A7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644327DF1F55056E00D30A7B /* AppDelegate.swift */; };
 		644327E21F55056E00D30A7B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 644327E11F55056E00D30A7B /* art.scnassets */; };
-		644327E41F55056E00D30A7B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644327E31F55056E00D30A7B /* ViewController.swift */; };
+		644327E41F55056E00D30A7B /* RampPlacerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644327E31F55056E00D30A7B /* RampPlacerVC.swift */; };
 		644327E71F55056E00D30A7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 644327E51F55056E00D30A7B /* Main.storyboard */; };
 		644327E91F55056E00D30A7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 644327E81F55056E00D30A7B /* Assets.xcassets */; };
 		644327EC1F55056E00D30A7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 644327EA1F55056E00D30A7B /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 		644327DC1F55056E00D30A7B /* ramp-up.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ramp-up.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		644327DF1F55056E00D30A7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		644327E11F55056E00D30A7B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		644327E31F55056E00D30A7B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		644327E31F55056E00D30A7B /* RampPlacerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RampPlacerVC.swift; sourceTree = "<group>"; };
 		644327E61F55056E00D30A7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		644327E81F55056E00D30A7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		644327EB1F55056E00D30A7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,15 +56,23 @@
 		644327DE1F55056E00D30A7B /* ramp-up */ = {
 			isa = PBXGroup;
 			children = (
+				644327F31F55074100D30A7B /* Controller */,
 				644327DF1F55056E00D30A7B /* AppDelegate.swift */,
 				644327E11F55056E00D30A7B /* art.scnassets */,
-				644327E31F55056E00D30A7B /* ViewController.swift */,
 				644327E51F55056E00D30A7B /* Main.storyboard */,
 				644327E81F55056E00D30A7B /* Assets.xcassets */,
 				644327EA1F55056E00D30A7B /* LaunchScreen.storyboard */,
 				644327ED1F55056E00D30A7B /* Info.plist */,
 			);
 			path = "ramp-up";
+			sourceTree = "<group>";
+		};
+		644327F31F55074100D30A7B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				644327E31F55056E00D30A7B /* RampPlacerVC.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				644327E41F55056E00D30A7B /* ViewController.swift in Sources */,
+				644327E41F55056E00D30A7B /* RampPlacerVC.swift in Sources */,
 				644327E01F55056E00D30A7B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,10 +285,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 938M7XW9DC;
+				DEVELOPMENT_TEAM = TRJ9QY3S8S;
 				INFOPLIST_FILE = "ramp-up/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.aure.ramp-up";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.aure.ramp-upAR";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -291,10 +299,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 938M7XW9DC;
+				DEVELOPMENT_TEAM = TRJ9QY3S8S;
 				INFOPLIST_FILE = "ramp-up/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.aure.ramp-up";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.aure.ramp-upAR";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
