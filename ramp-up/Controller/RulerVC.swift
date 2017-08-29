@@ -13,6 +13,8 @@ import ARKit
 class RulerVC: UIViewController,ARSCNViewDelegate {
 
     @IBOutlet weak var sceneView: ARSCNView!
+    var dotNodes = [SCNNode]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,7 +51,9 @@ class RulerVC: UIViewController,ARSCNViewDelegate {
         let results = sceneView.hitTest(touchLocation, types: .featurePoint)
         
         if let hitResult = results.first{
-            addDot(at: hitResult)
+            if dotNodes.count<2 {
+                addDot(at: hitResult)
+            }
         }
     }
     
@@ -64,7 +68,26 @@ class RulerVC: UIViewController,ARSCNViewDelegate {
         dotNode.position = SCNVector3(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y, hitResult.worldTransform.columns.3.z)
         
         sceneView.scene.rootNode.addChildNode(dotNode)
+        dotNodes.append(dotNode)
         
+        if dotNodes.count >= 2{
+            calculate()
+        }
+        
+    }
+    
+    func calculate(){
+        let start = dotNodes[0]
+        let end = dotNodes[1]
+        
+        let a = end.position.x - start.position.x
+        let b = end.position.y - start.position.y
+        let c = end.position.z - start.position.z
+        
+        let distance = sqrt(pow(a, 2) + pow(b, 2) + pow(c, 2))
+        
+      
+        print("distance ",abs(distance))
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
