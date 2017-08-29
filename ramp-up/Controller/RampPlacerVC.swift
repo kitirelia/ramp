@@ -12,7 +12,14 @@ import ARKit
 
 class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationControllerDelegate {
 
+    @IBOutlet weak var control: UIStackView!
     @IBOutlet var sceneView: ARSCNView!
+    var selectedRampName:String?
+    @IBOutlet weak var rotateBtn: UIButton!
+    @IBOutlet weak var downBtn: UIButton!
+    @IBOutlet weak var upBtn: UIButton!
+    var selectedRamp:SCNNode?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +31,24 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/pipe.dae")!
+        let scene = SCNScene(named: "art.scnassets/main.scn")!
+        sceneView.automaticallyUpdatesLighting = true
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        let gesture1 = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressed(gesture:)))
+        let gesture2 = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressed(gesture:)))
+        let gesture3 = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressed(gesture:)))
+        
+        gesture1.minimumPressDuration = 0.1
+        gesture2.minimumPressDuration = 0.1
+        gesture3.minimumPressDuration = 0.1
+        
+        rotateBtn.addGestureRecognizer(gesture1)
+        upBtn.addGestureRecognizer(gesture2)
+        downBtn.addGestureRecognizer(gesture3)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +99,18 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard  let touch = touches.first else { return }
+        
+        let results = sceneView.hitTest(touch.location(in: sceneView), types: [.featurePoint])
+        
+        guard let hitFeature = results.last else { return }
+        
+        let hitTransform = SCNMatrix4(hitFeature.worldTransform)
+        let hitPositon = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+        placeRamp(position: hitPositon)
+    }
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
@@ -95,8 +128,45 @@ class RampPlacerVC: UIViewController, ARSCNViewDelegate,UIPopoverPresentationCon
     }
     
     func onRampSelected(rampName:String){
+        selectedRampName = rampName
+    }
+    
+    func placeRamp(position:SCNVector3){
+        if let rampName = selectedRampName{
+            control.isHidden = false
+            let ramp = Ramp.getRampForName(rampName: rampName)
+            selectedRamp = ramp
+            ramp.position = position
+            ramp.scale = SCNVector3Make(0.01, 0.01, 0.01)
+            sceneView.scene.rootNode.addChildNode(ramp)
+        }
         
     }
     
+    @IBAction func removeBtnPressed(_ sender: Any) {
+        if let ramp = selectedRamp{
+            ramp.removeFromParentNode()
+            selectedRamp = nil
+        }
+    }
+    
+    @objc func onLongPressed(gesture:UILongPressGestureRecognizer){
+        if let ramp = selectedRamp{
+            if gesture.state == .ended{
+                ramp.removeAllActions()
+            }else if gesture.state == .began{
+                if gesture.view === rotateBtn{
+                    let rotate = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: CGFloat(0.08 * Double.pi), z: 0, duration: 0.1))
+                    ramp.runAction(rotate!)
+                }else if gesture.view === upBtn{
+                    let move = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: 0.08, z: 0, duration: 0.1))
+                    ramp.runAction(move!)
+                }else if gesture.view === downBtn{
+                    let move = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: -0.08, z: 0, duration: 0.1))
+                    ramp.runAction(move!)
+                }
+            }
+        }
+    }
     
 }
